@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城投图册展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+        
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .gallery-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .gallery-caption {
+            padding: 15px;
+            text-align: center;
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .nav-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #3367d6;
+        }
+        
+        .instructions {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            button {
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>城投图册展示</h1>
+        </header>
+        
+        <div class="instructions">
+            <h3>使用说明：</h3>
+            <p>已将您指定的4张图片预置在程序中，只需上传HTML和图片到GitHub仓库即可使用。</p>
+            <ol>
+                <li>将此HTML文件保存为 <code>gallery.html</code></li>
+                <li>下载您的4张图片</li>
+                <li>将所有文件上传到GitHub仓库同一目录</li>
+                <li>访问您的GitHub Pages网址</li>
+            </ol>
+        </div>
+        
+        <div class="nav-controls">
+            <button id="prev-btn">上一张</button>
+            <button id="next-btn">下一张</button>
+        </div>
+        
+        <div class="gallery">
+            <!-- 图片将由JavaScript动态加载 -->
+            <div class="gallery-item" id="gallery-item">
+                <img id="gallery-image" class="gallery-image" src="" alt="城投图册">
+                <div id="image-caption" class="gallery-caption"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 预置您指定的4张图片
+        const imageFiles = [
+            "城投图册 -718修改_画板 1(1).jpg",
+            "城投图册 -718修改-02(1).jpg",
+            "城投图册 -718修改-03(2).jpg",
+            "城投图册 -718修改-04(1).jpg"
+        ];
+        
+        let currentIndex = 0;
+        
+        // 获取DOM元素
+        const galleryImage = document.getElementById('gallery-image');
+        const imageCaption = document.getElementById('image-caption');
+        const prevButton = document.getElementById('prev-btn');
+        const nextButton = document.getElementById('next-btn');
+        
+        // 显示当前图片
+        function showImage() {
+            galleryImage.src = imageFiles[currentIndex];
+            imageCaption.textContent = `图 ${currentIndex + 1}：${imageFiles[currentIndex]}`;
+            
+            // 更新按钮状态
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === imageFiles.length - 1;
+        }
+        
+        // 上一张图片
+        prevButton.addEventListener('click', function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showImage();
+            }
+        });
+        
+        // 下一张图片
+        nextButton.addEventListener('click', function() {
+            if (currentIndex < imageFiles.length - 1) {
+                currentIndex++;
+                showImage();
+            }
+        });
+        
+        // 初始加载第一张图片
+        showImage();
+    </script>
+</body>
+</html>
